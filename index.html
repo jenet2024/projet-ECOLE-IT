@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>HyperFresh Anti-Gaspi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stile.css">
+    
+</head>
+<body>
+<header>
+    <div class="logo">HyperFresh Anti‑Gaspi</div>
+    <nav>
+        <button data-page="accueil" class="active">Accueil</button>
+        <button data-page="fiche">Produit / Panier</button>
+        <button data-page="magasin">Magasin</button>
+        <button data-page="profil">Profil</button>
+        <button data-page="paiement">Paiement</button>
+        <button data-page="alertes">Alertes</button>
+        <button data-page="auth">Connexion</button>
+
+    </nav>
+</header>
+
+<main>
+    <!-- ACCUEIL -->
+    <section id="accueil" class="active">
+        <h1>Économise en sauvant des produits</h1>
+        <p class="muted">Spécial étudiants : jusqu’à <strong>-60%</strong> sur les produits proches de la date limite.</p>
+
+        <div class="card">
+            <h2>Offres du jour <span class="badge">Spécial étudiants</span></h2>
+            <div class="products-grid">
+                <div class="card product-card">
+                    <img src="/" alt="Panier étudiant">
+                    <h3>Panier étudiant anti‑gaspi</h3>
+                    <p class="muted">Assortiment de produits frais proches de la DLC.</p>
+                    <p>
+                        <span class="price">4,90€</span>
+                        <span class="price-old">12,90€</span>
+                    </p>
+                    <p class="muted">Expire dans 1 jour</p>
+                    <button class="btn" onclick="selectProduct('Panier étudiant anti‑gaspi', 4.9, 12.9)">Voir le produit</button>
+                </div>
+
+                <div class="card product-card">
+                    <img src="" alt="Fruits moches">
+                    <h3>Panier fruits “moches”</h3>
+                    <p class="muted">Fruits parfaitement consommables mais invendables en rayon.</p>
+                    <p>
+                        <span class="price">2,50€</span>
+                        <span class="price-old">6,00€</span>
+                    </p>
+                    <p class="muted">Expire dans 2 jours</p>
+                    <button class="btn" onclick="selectProduct('Panier fruits moches', 2.5, 6)">Voir le produit</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Ton impact</h2>
+            <p>Tu as déjà sauvé <strong id="impact-kg">0,0 kg</strong> de nourriture ce mois‑ci.</p>
+            <p class="muted">Continue à sauver des produits pour augmenter ton score anti‑gaspi.</p>
+        </div>
+    </section>
+
+    <!-- PAGE INSCRIPTION / CONNEXION -->
+<section id="auth">
+    <h1>Connexion / Inscription</h1>
+
+    <div class="card">
+        <h2>Connexion</h2>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="login-email" placeholder="exemple@mail.com">
+        </div>
+
+        <div class="input-group">
+            <label>Mot de passe</label>
+            <input type="password" id="login-password" placeholder="••••••••">
+        </div>
+
+        <button class="btn" onclick="loginUser()">Se connecter</button>
+    </div>
+
+    <div class="card">
+        <h2>Créer un compte</h2>
+
+        <div class="input-group">
+            <label>Nom complet</label>
+            <input type="text" id="signup-name" placeholder="Ton nom">
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="signup-email" placeholder="exemple@mail.com">
+        </div>
+
+        <div class="input-group">
+            <label>Mot de passe</label>
+            <input type="password" id="signup-password" placeholder="••••••••">
+        </div>
+
+        <div class="input-group">
+            <label>Rôle</label>
+            <select id="signup-role">
+                <option value="etudiant">Étudiant</option>
+                <option value="actif">Jeune actif</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="signupUser()">Créer un compte</button>
+    </div>
+
+    <p id="auth-status" class="muted" style="margin-top:10px;"></p>
+</section>
+
+
+    <!-- FICHE PRODUIT + PANIER -->
+    <section id="fiche">
+        <h1>Fiche produit & Panier</h1>
+
+        <div class="card" id="product-details">
+            <h2 id="product-title">Aucun produit sélectionné</h2>
+            <p id="product-desc" class="muted">Choisis un produit depuis la page d’accueil pour voir les détails.</p>
+            <div id="product-prices" style="display:none; margin-top:8px;">
+                <p>
+                    <span class="price" id="product-new-price"></span>
+                    <span class="price-old" id="product-old-price"></span>
+                </p>
+                <p class="muted">Offre étudiante anti‑gaspi.</p>
+                <button class="btn" onclick="addToCart()">Ajouter au panier</button>
+            </div>
+        </div>
+
+        <div class="card" id="cart">
+            <h2>Panier</h2>
+            <div id="cart-empty">Ton panier est vide.</div>
+            <div id="cart-items"></div>
+            <div id="cart-summary" style="display:none; margin-top:10px;">
+                <p>Total : <strong id="cart-total">0,00€</strong></p>
+                <p class="muted">Économie réalisée : <strong id="cart-saved">0,00€</strong></p>
+                <button class="btn" onclick="goToPayment()">Passer au paiement</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAGASIN HYPERFRESH -->
+    <section id="magasin">
+        <h1>Magasin HyperFresh le plus proche</h1>
+
+        <div class="card">
+            <h2>HyperFresh Orléans Centre</h2>
+            <p class="muted">12 Rue des Étudiants, 45000 Orléans</p>
+            <p class="muted">Ouvert : 8h30 – 21h00</p>
+            <p class="muted">Distance estimée : 1,2 km</p>
+        </div>
+
+        <div class="card">
+            <h2>Rayon anti‑gaspi</h2>
+            <ul class="list">
+                <li>3 paniers étudiants disponibles</li>
+                <li>5 paniers fruits & légumes “moches”</li>
+                <li>Produits frais -40% (yaourts, salades, plats cuisinés)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- PROFIL UTILISATEUR -->
+    <section id="profil">
+        <h1>Profil utilisateur</h1>
+
+        <div class="card">
+            <h2>Jenet – Étudiante</h2>
+            <p class="muted">Membre depuis : 2025</p>
+            <p>Points de fidélité : <strong id="points">120</strong></p>
+            <p>Produits sauvés : <strong id="saved-products">5</strong></p>
+            <p>Impact : <strong id="impact-text">1,5 kg de nourriture sauvée</strong></p>
+        </div>
+
+        <div class="card">
+            <h2>Préférences</h2>
+            <div class="input-group">
+                <label>Budget max par panier (€)</label>
+                <input type="number" value="5" min="1" max="30">
+            </div>
+            <div class="input-group">
+                <label>Type de produits préférés</label>
+                <select>
+                    <option>Panier mixte</option>
+                    <option>Fruits & légumes</option>
+                    <option>Produits frais</option>
+                    <option>Végétarien</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAIEMENT & RETRAIT -->
+    <section id="paiement">
+        <h1>Paiement & Retrait</h1>
+
+        <div class="card">
+            <h2>Récapitulatif du panier</h2>
+            <div id="payment-summary">
+                <p class="muted">Aucun panier en cours. Ajoute un produit depuis la fiche produit.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Paiement</h2>
+            <div class="input-group">
+                <label>Moyen de paiement</label>
+                <select id="payment-method">
+                    <option>Carte bancaire</option>
+                    <option>Apple Pay</option>
+                    <option>Google Pay</option>
+                </select>
+            </div>
+            <button class="btn" onclick="confirmPayment()">Confirmer le paiement</button>
+        </div>
+
+        <div class="card" id="qr-card" style="display:none;">
+            <h2>Retrait en magasin</h2>
+            <p>Commande confirmée !</p>
+            <p class="muted">Présente ce QR code à l’accueil du rayon anti‑gaspi.</p>
+            <div style="margin-top:10px; width:150px; height:150px; background:#eee; display:flex; align-items:center; justify-content:center; border-radius:8px;">
+                <span class="muted">QR CODE</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALERTES PERSONNALISÉES -->
+    <section id="alertes">
+        <h1>Alertes personnalisées</h1>
+
+        <div class="card">
+            <h2>Choisis tes alertes</h2>
+            <div class="pill">
+                <input type="checkbox" checked id="alert-etudiants">
+                <label for="alert-etudiants">Paniers étudiants</label>
+            </div>
+            <div class="pill">
+                <input type="checkbox" checked id="alert-3e">
+                <label for="alert-3e">Produits &lt; 3€</label>
+            </div>
+            <div class="pill">
+                <input type="checkbox" id="alert-dlc">
+                <label for="alert-dlc">DLC &lt; 48h</label>
+            </div>
+            <div class="pill">
+                <input type="checkbox" id="alert-bio">
+                <label for="alert-bio">Produits bio</label>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Magasin préféré</h2>
+            <div class="input-group">
+                <label>Choix du magasin</label>
+                <select>
+                    <option>HyperFresh Orléans Centre</option>
+                    <option>HyperFresh Olivet</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Plage horaire des notifications</label>
+                <select>
+                    <option>8h – 12h</option>
+                    <option>12h – 18h</option>
+                    <option>18h – 22h</option>
+                </select>
+            </div>
+
+            <button class="btn secondary" onclick="saveAlerts()">Enregistrer les préférences</button>
+            <p id="alert-status" class="muted" style="margin-top:8px;"></p>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="footer-content">
+        <p>© 2025 HyperFresh Anti‑Gaspi — Tous droits réservés</p>
+
+        <div class="social-links">
+            <a href="#" aria-label="Instagram">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+            </a>
+            <a href="#" aria-label="TikTok">
+                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok">
+            </a>
+            <a href="#" aria-label="Facebook">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+            </a>
+        </div>
+    </div>
+</footer>
+
+</main>
+
+<script src="fiche.js"></script>
+</body>
+</html>
