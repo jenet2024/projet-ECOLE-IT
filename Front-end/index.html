@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="style.css">
     
 </head>
+
+<script src="fiche.js"></script>
+<script src="auth.js"></script>
+<script src="produits.js"></script>
 <body>
 <header>
     <div class="logo">Food Deal</div>
@@ -14,12 +18,16 @@
         <button data-page="accueil" class="active">Accueil</button>
         <button data-page="fiche">Produit / Panier</button>
         <button data-page="magasin">Magasin</button>
-        <button data-page="profil">Profil</button>
-        <button data-page="paiement">Paiement</button>
-        <button data-page="alertes">Alertes</button>
-        <button data-page="auth">Connexion</button>
+
+        <!-- protégés -->
+        <button data-page="profil" id="nav-profil">Profil</button>
+        <button data-page="paiement" id="nav-paiement">Paiement</button>
+
+        <!-- auth -->
+        <button data-page="auth" id="nav-auth">Connexion</button>
     </nav>
 </header>
+
 
 <main>
     <!-- ACCUEIL -->
@@ -29,30 +37,8 @@
 
         <div class="card">
             <h2>🔥 Offres du jour <span class="badge">Spécial étudiants</span></h2>
-            <div class="products-grid">
-                <div class="card product-card">
-                    <img src="https://via.placeholder.com/300x180/4caf50/ffffff?text=Panier+Etudiant" alt="Panier étudiant">
-                    <h3>Panier étudiant anti‑gaspi</h3>
-                    <p class="muted">Assortiment de produits frais proches de la DLC.</p>
-                    <p style="margin: 12px 0;">
-                        <span class="price">4,90€</span>
-                        <span class="price-old">12,90€</span>
-                    </p>
-                    <p class="muted" style="margin-bottom: 12px;">⏰ Expire dans 1 jour</p>
-                    <button class="btn" onclick="selectProduct('Panier étudiant anti‑gaspi', 4.9, 12.9)">Voir le produit</button>
-                </div>
-
-                <div class="card product-card">
-                    <img src="https://via.placeholder.com/300x180/66bb6a/ffffff?text=Fruits+Moches" alt="Fruits moches">
-                    <h3>Panier fruits "moches"</h3>
-                    <p class="muted">Fruits parfaitement consommables mais invendables en rayon.</p>
-                    <p style="margin: 12px 0;">
-                        <span class="price">2,50€</span>
-                        <span class="price-old">6,00€</span>
-                    </p>
-                    <p class="muted" style="margin-bottom: 12px;">⏰ Expire dans 2 jours</p>
-                    <button class="btn" onclick="selectProduct('Panier fruits moches', 2.5, 6)">Voir le produit</button>
-                </div>
+            <div class="products-grid" id="productsGrid" >
+                
             </div>
         </div>
 
@@ -301,8 +287,7 @@
 
 </main>
 
-<script src="fiche.js"></script>
-<script src="auth.js"></script>
+
 
 </body>
 </html>

@@ -20,13 +20,13 @@ function calculerPrixReduit(prix, statut) {
 
   switch (statut) {
     case "expire_bientot":
-      return prix * 0.5;       // 50% de réduction
+      return prix * 0.5;       // -50%
     case "presque_expirer":
-      return prix * 0.25;      // 75% de réduction
+      return prix * 0.25;      // -75%
     case "expirer":
-      return 0.0;              // produit périmé, pas de vente
+      return 0.0;
     default:
-      return null;             // produit valide, pas de prix réduit
+      return null;
   }
 }
 
@@ -34,11 +34,24 @@ export const Produit = sequelize.define(
   "Produit",
   {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+
     nom: { type: DataTypes.STRING, allowNull: false },
+
     description: { type: DataTypes.TEXT },
+
     prix: { type: DataTypes.FLOAT, allowNull: false },
+
     quantite: { type: DataTypes.INTEGER, defaultValue: 1 },
+
     dateExpiration: { type: DataTypes.DATE },
+
+    photo: {
+      type: DataTypes.STRING,
+      allowNull: true, // URL externe (Unsplash, etc.)
+      validate: {
+        isUrl: true,
+      },
+    },
 
     statut: {
       type: DataTypes.ENUM(
@@ -52,7 +65,7 @@ export const Produit = sequelize.define(
 
     prix_reduit: {
       type: DataTypes.FLOAT,
-      allowNull: true, // null si produit valide
+      allowNull: true,
     },
   },
   {

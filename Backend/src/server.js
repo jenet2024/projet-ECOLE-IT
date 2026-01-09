@@ -6,6 +6,9 @@ import { seedProduits } from "./seeders/produits.seed.js";
 import authRoutes from "./routes/auth.routes.js";
 import produitRoutes from "./routes/produit.routes.js";
 
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger.js";
+
 import { connectDB, sequelize } from "./config/database.js";
 import "./models/User.js";
 import "./models/Produit.js";
@@ -16,6 +19,10 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+console.log("Swagger disponible sur http://localhost:4000/api-docs");
+
 
 // routes
 app.use("/api/auth", authRoutes);

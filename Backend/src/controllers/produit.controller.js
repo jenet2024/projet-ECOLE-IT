@@ -1,6 +1,6 @@
 import { Produit } from "../models/Produit.js";
 
-// GET produits avec statut 'presque_expirer' ou 'expire_bientot'
+// GET produits avec statut 'presque_expirer' et 'expire_bientot'
 export const getProduitsPresqueExpirer = async (req, res) => {
   try {
     const produits = await Produit.findAll({

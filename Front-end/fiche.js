@@ -16,7 +16,7 @@
     let selectedProduct = null;
     let cart = [];
 
-    function selectProduct(name, newPrice, oldPrice) {
+    /*function selectProduct(name, newPrice, oldPrice) {
         selectedProduct = { name, newPrice, oldPrice };
         const title = document.getElementById('product-title');
         const desc = document.getElementById('product-desc');
@@ -32,7 +32,7 @@
             b.classList.toggle('active', b.dataset.page === 'fiche');
         });
         sections.forEach(s => s.classList.toggle('active', s.id === 'fiche'));
-    }
+    }*/
 
     function addToCart() {
         if (!selectedProduct) return;
